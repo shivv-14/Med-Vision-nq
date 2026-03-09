@@ -34,15 +34,15 @@ export default function DashboardPage() {
       <div
         className={cn(
           "transition-all duration-300",
-          sidebarCollapsed ? "ml-20" : "ml-64"
+          sidebarCollapsed ? "lg:ml-20" : "lg:ml-64"
         )}
       >
         <Header />
 
-        <main className="p-6">
+        <main className="p-4 md:p-6">
           {/* Welcome Section */}
           <div className="mb-8">
-            <h1 className="text-3xl font-serif font-semibold text-foreground">
+            <h1 className="text-2xl md:text-3xl font-serif font-semibold text-foreground">
               Welcome back, Sarah
             </h1>
             <p className="mt-2 text-muted-foreground">
@@ -51,7 +51,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             <StatCard
               title="Therapy Streak"
               value="12 days"
@@ -87,7 +87,7 @@ export default function DashboardPage() {
             <h2 className="text-lg font-semibold text-foreground mb-4">
               Quick Actions
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <QuickActionCard
                 title="AI Screening"
                 description="Take a symptom assessment with our AI screening engine"
