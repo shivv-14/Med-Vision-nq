@@ -329,40 +329,38 @@ export default function ScreeningPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-card">
-        <div className="max-w-4xl mx-auto px-4 py-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="size-10 rounded-xl bg-primary/10 flex items-center justify-center">
-              <Brain className="size-5 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-serif font-semibold text-foreground">
-                AI Symptom Screening
-              </h1>
-              <p className="text-sm text-muted-foreground">
-                Answer a few confidential questions to understand possible causes of pelvic pain
-              </p>
-            </div>
+    <div className="max-w-4xl mx-auto">
+      {/* Page Header */}
+      <div className="mb-6">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="size-10 rounded-xl bg-primary/10 flex items-center justify-center">
+            <Brain className="size-5 text-primary" />
           </div>
-
-          {/* Progress Bar */}
-          {!isIntro && (
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Progress</span>
-                <span className="font-medium text-foreground">
-                  {isResults ? "Complete" : `${currentStep} of ${totalQuestions}`}
-                </span>
-              </div>
-              <Progress value={progress} className="h-2" />
-            </div>
-          )}
+          <div>
+            <h1 className="text-2xl font-serif font-semibold text-foreground">
+              AI Symptom Screening
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              Answer a few confidential questions to understand possible causes of pelvic pain
+            </p>
+          </div>
         </div>
-      </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-8">
+        {/* Progress Bar */}
+        {!isIntro && (
+          <div className="space-y-2">
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">Progress</span>
+              <span className="font-medium text-foreground">
+                {isResults ? "Complete" : `${currentStep} of ${totalQuestions}`}
+              </span>
+            </div>
+            <Progress value={progress} className="h-2" />
+          </div>
+        )}
+      </div>
+
+      <div>
         {/* Intro Screen */}
         {isIntro && (
           <div className="space-y-8">
@@ -771,7 +769,7 @@ export default function ScreeningPage() {
             </div>
           </div>
         )}
-      </main>
+      </div>
     </div>
   )
 }
