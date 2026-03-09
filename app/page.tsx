@@ -1,5 +1,5 @@
 import { LoginForm } from "@/components/login-form"
-import { Sparkles } from "lucide-react"
+import { Heart } from "lucide-react"
 
 export default function LoginPage() {
   return (
@@ -20,19 +20,18 @@ export default function LoginPage() {
           {/* Logo */}
           <div className="flex items-center gap-3">
             <div className="size-10 rounded-xl bg-primary-foreground/10 flex items-center justify-center backdrop-blur-sm">
-              <Sparkles className="size-5" />
+              <Heart className="size-5" />
             </div>
-            <span className="text-xl font-semibold tracking-tight">Acme</span>
+            <span className="text-xl font-semibold tracking-tight">MedVision</span>
           </div>
 
           {/* Main Content */}
           <div className="flex-1 flex flex-col justify-center max-w-lg">
             <h1 className="text-5xl font-serif leading-tight tracking-tight text-balance">
-              Welcome back to your creative space
+              Your journey to wellness starts here
             </h1>
             <p className="mt-6 text-lg text-primary-foreground/70 leading-relaxed">
-              Sign in to access your projects, collaborate with your team, and
-              bring your ideas to life.
+              AI-powered therapy assistance designed with care, compassion, and clinical expertise to support your healing journey.
             </p>
           </div>
 
@@ -40,17 +39,17 @@ export default function LoginPage() {
           <div className="bg-primary-foreground/5 backdrop-blur-sm rounded-2xl p-6 border border-primary-foreground/10">
             <p className="text-primary-foreground/80 leading-relaxed italic">
               {
-                '"This platform has transformed how we collaborate. The intuitive interface and powerful features make it a joy to use every day."'
+                '"This platform has given me the tools and confidence to take control of my health journey. The personalized guidance makes all the difference."'
               }
             </p>
             <div className="mt-4 flex items-center gap-3">
               <div className="size-10 rounded-full bg-primary-foreground/20 flex items-center justify-center text-sm font-medium">
-                JD
+                SK
               </div>
               <div>
-                <p className="font-medium text-sm">Jane Doe</p>
+                <p className="font-medium text-sm">Sarah K.</p>
                 <p className="text-xs text-primary-foreground/60">
-                  Product Designer at Scale
+                  Patient since 2024
                 </p>
               </div>
             </div>
@@ -64,10 +63,10 @@ export default function LoginPage() {
           {/* Mobile Logo */}
           <div className="flex lg:hidden items-center gap-3 mb-8">
             <div className="size-10 rounded-xl bg-primary flex items-center justify-center">
-              <Sparkles className="size-5 text-primary-foreground" />
+              <Heart className="size-5 text-primary-foreground" />
             </div>
             <span className="text-xl font-semibold tracking-tight text-foreground">
-              Acme
+              MedVision
             </span>
           </div>
 
