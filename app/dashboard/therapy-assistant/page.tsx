@@ -20,10 +20,14 @@ import {
   Lightbulb,
   Target,
   Circle,
+  TrendingUp,
+  Calendar,
+  BarChart3,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
+import { Progress } from "@/components/ui/progress"
 
 // Types
 interface Message {
@@ -31,7 +35,7 @@ interface Message {
   role: "user" | "assistant"
   content: string
   timestamp: Date
-  type?: "text" | "exercise" | "breathing"
+  type?: "text" | "exercise" | "breathing" | "off-topic"
 }
 
 interface TherapyTopic {
@@ -40,6 +44,58 @@ interface TherapyTopic {
   icon: React.ReactNode
   description: string
   prompts: string[]
+}
+
+// Allowed Topic Keywords for filtering
+const healthcareKeywords = [
+  "pain", "hurt", "ache", "symptom", "therapy", "exercise", "treatment",
+  "medication", "healing", "recovery", "health", "medical", "doctor",
+  "pelvic", "muscle", "dilator", "vaginismus", "dyspareunia", "diagnosis",
+  "condition", "chronic", "acute", "inflammation", "infection", "hormones"
+]
+
+const feelingsKeywords = [
+  "feel", "feeling", "feelings", "emotion", "emotions", "emotional",
+  "anxious", "anxiety", "stressed", "stress", "worried", "worry",
+  "scared", "fear", "afraid", "nervous", "upset", "sad", "happy",
+  "frustrated", "angry", "depressed", "overwhelmed", "calm", "relaxed",
+  "hopeful", "hopeless", "confident", "insecure", "vulnerable"
+]
+
+const humanRelatedKeywords = [
+  "relationship", "partner", "intimacy", "intimate", "love", "trust",
+  "communication", "support", "family", "friend", "self-esteem",
+  "body", "mind", "mental", "physical", "sexual", "wellbeing",
+  "wellness", "coping", "mindfulness", "meditation", "breathing",
+  "relaxation", "sleep", "rest", "energy", "fatigue", "tired"
+]
+
+// Function to check if message is on-topic
+const isMessageOnTopic = (message: string): boolean => {
+  const lowerMessage = message.toLowerCase()
+  
+  // Check for healthcare keywords
+  const hasHealthcare = healthcareKeywords.some(keyword => 
+    lowerMessage.includes(keyword)
+  )
+  
+  // Check for feelings keywords
+  const hasFeelings = feelingsKeywords.some(keyword => 
+    lowerMessage.includes(keyword)
+  )
+  
+  // Check for human-related keywords
+  const hasHumanRelated = humanRelatedKeywords.some(keyword => 
+    lowerMessage.includes(keyword)
+  )
+  
+  // Also allow greetings and basic conversation starters
+  const greetings = ["hello", "hi", "hey", "good morning", "good evening", "how are you", "thank you", "thanks", "help", "start", "begin"]
+  const hasGreeting = greetings.some(greeting => 
+    lowerMessage.includes(greeting)
+  )
+  
+  return hasHealthcare || hasFeelings || hasHumanRelated || hasGreeting
 }
 
 // Therapy Topics
@@ -101,9 +157,26 @@ const therapyTopics: TherapyTopic[] = [
   },
 ]
 
-// AI Response Generator (simulated)
-const generateAIResponse = (userMessage: string): { content: string; type: "text" | "exercise" | "breathing" } => {
+// AI Response Generator
+const generateAIResponse = (userMessage: string): { content: string; type: "text" | "exercise" | "breathing" | "off-topic" } => {
   const lowerMessage = userMessage.toLowerCase()
+  
+  // Check if message is on-topic
+  if (!isMessageOnTopic(userMessage)) {
+    return {
+      type: "off-topic",
+      content: `I appreciate you reaching out! However, I'm specifically designed to help with healthcare, feelings, emotions, and human-related topics.
+
+**Please ask me about:**
+- Health care concerns and therapy guidance
+- Feelings and emotional support
+- Relaxation and breathing exercises
+- Pelvic health and exercises
+- Mental wellness and coping strategies
+
+Feel free to select a topic from the sidebar or try asking something like "How can I manage my anxiety?" or "Guide me through a breathing exercise."`,
+    }
+  }
 
   // Breathing/Relaxation responses
   if (lowerMessage.includes("breath") || lowerMessage.includes("relax")) {
@@ -168,7 +241,7 @@ Vaginal dilators are smooth, graduated devices used to help your body become com
 
 **Important:** Progress to the next size only when the current one feels comfortable. This may take days or weeks - there's no rush.
 
-⚠️ **Safety Note:** Always consult a healthcare professional before beginning dilator therapy to ensure it's appropriate for you.
+**Safety Note:** Always consult a healthcare professional before beginning dilator therapy to ensure it's appropriate for you.
 
 Would you like tips on relaxation techniques before using a dilator?`,
     }
@@ -191,11 +264,11 @@ These thoughts are common and understandable given past experiences with pain.
 **Reframing Technique:**
 Let's practice turning a fearful thought into a more balanced one:
 
-❌ **Unhelpful thought:** "It will definitely hurt"
-✅ **Balanced thought:** "I'm learning techniques that may help. I can stop anytime I need to."
+**Unhelpful thought:** "It will definitely hurt"
+**Balanced thought:** "I'm learning techniques that may help. I can stop anytime I need to."
 
-❌ **Unhelpful thought:** "I'll never be normal"
-✅ **Balanced thought:** "Many people have overcome this with time and practice. I'm making progress."
+**Unhelpful thought:** "I'll never be normal"
+**Balanced thought:** "Many people have overcome this with time and practice. I'm making progress."
 
 Would you like to share a specific thought you've been having? We can work on reframing it together.`,
     }
@@ -336,7 +409,7 @@ function BreathingAnimation({ isActive }: { isActive: boolean }) {
         className={cn(
           "size-32 rounded-full flex items-center justify-center transition-all duration-1000",
           phase === "inhale" && "scale-125 bg-blue-100 border-4 border-blue-400",
-          phase === "hold" && "scale-125 bg-green-100 border-4 border-green-400",
+          phase === "hold" && "scale-125 bg-emerald-100 border-4 border-emerald-400",
           phase === "exhale" && "scale-100 bg-blue-50 border-4 border-blue-300"
         )}
       >
@@ -354,13 +427,88 @@ function BreathingAnimation({ isActive }: { isActive: boolean }) {
   )
 }
 
+// Progress Summary Widget
+function ProgressSummaryWidget() {
+  return (
+    <div className="bg-card rounded-xl border border-border p-4">
+      <h3 className="font-semibold text-sm text-foreground mb-3 flex items-center gap-2">
+        <BarChart3 className="size-4" />
+        Your Progress
+      </h3>
+      <div className="space-y-4">
+        {/* Recovery Score */}
+        <div className="text-center">
+          <div className="relative size-20 mx-auto">
+            <svg className="size-20 -rotate-90" viewBox="0 0 36 36">
+              <path
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                className="text-secondary"
+              />
+              <path
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeDasharray="72, 100"
+                className="text-emerald-500"
+              />
+            </svg>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-lg font-bold text-foreground">72%</span>
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground mt-1">Recovery Score</p>
+        </div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-2 gap-3">
+          <div className="bg-secondary/50 rounded-lg p-2 text-center">
+            <div className="flex items-center justify-center gap-1">
+              <TrendingUp className="size-3 text-emerald-500" />
+              <span className="text-sm font-semibold text-foreground">12</span>
+            </div>
+            <p className="text-xs text-muted-foreground">Day Streak</p>
+          </div>
+          <div className="bg-secondary/50 rounded-lg p-2 text-center">
+            <div className="flex items-center justify-center gap-1">
+              <Calendar className="size-3 text-primary" />
+              <span className="text-sm font-semibold text-foreground">24</span>
+            </div>
+            <p className="text-xs text-muted-foreground">Sessions</p>
+          </div>
+        </div>
+
+        {/* Daily Progress */}
+        <div>
+          <div className="flex items-center justify-between text-xs mb-1">
+            <span className="text-muted-foreground">Today&apos;s Exercises</span>
+            <span className="font-medium text-foreground">3/4</span>
+          </div>
+          <Progress value={75} className="h-1.5" />
+        </div>
+
+        <Link
+          href="/dashboard/progress"
+          className="flex items-center justify-center gap-1 text-xs text-primary hover:underline"
+        >
+          View Full Progress
+          <ChevronRight className="size-3" />
+        </Link>
+      </div>
+    </div>
+  )
+}
+
 export default function TherapyAssistantPage() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
       role: "assistant",
       content:
-        "Hello! I'm here to help you understand pelvic pain and guide you through relaxation and therapy exercises. Everything you share is private and confidential.\n\nHow are you feeling today? You can tell me what's on your mind, or choose a topic below to get started.",
+        "Hello! I'm here to help you with healthcare guidance, emotional support, and therapy exercises. Everything you share is private and confidential.\n\nHow are you feeling today? You can tell me what's on your mind, or choose a topic below to get started.",
       timestamp: new Date(),
       type: "text",
     },
@@ -431,7 +579,7 @@ export default function TherapyAssistantPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="max-w-7xl mx-auto">
       {/* Page Header */}
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-2">
@@ -443,7 +591,7 @@ export default function TherapyAssistantPage() {
               AI Therapy Assistant
             </h1>
             <p className="text-sm text-muted-foreground">
-              A safe space to talk, learn relaxation techniques, and improve pelvic health
+              A safe space to talk about health care, feelings, emotions, and wellness
             </p>
           </div>
         </div>
@@ -452,14 +600,18 @@ export default function TherapyAssistantPage() {
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mt-4">
           <p className="text-xs text-amber-800">
             <Shield className="size-3 inline mr-1" />
-            This AI assistant provides educational and emotional support. It is not a substitute for professional medical treatment. Always consult a healthcare provider for medical advice.
+            This AI assistant provides educational and emotional support for healthcare, feelings, emotions, and human-related topics. It is not a substitute for professional medical treatment.
           </p>
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-4 gap-6">
-        {/* Left Sidebar - Topics */}
+      <div className="grid lg:grid-cols-5 gap-6">
+        {/* Left Sidebar - Topics & Progress */}
         <div className="lg:col-span-1 space-y-4">
+          {/* Progress Summary */}
+          <ProgressSummaryWidget />
+
+          {/* Therapy Topics */}
           <div className="bg-card rounded-xl border border-border p-4">
             <h3 className="font-semibold text-sm text-foreground mb-3 flex items-center gap-2">
               <Lightbulb className="size-4" />
@@ -523,15 +675,15 @@ export default function TherapyAssistantPage() {
             </h3>
             <div className="space-y-2 text-xs text-muted-foreground">
               <p className="flex items-center gap-2">
-                <Shield className="size-3 text-green-500" />
+                <Shield className="size-3 text-emerald-500" />
                 Encrypted conversations
               </p>
               <p className="flex items-center gap-2">
-                <Circle className="size-3 text-green-500" />
+                <Circle className="size-3 text-emerald-500" />
                 Anonymous by default
               </p>
               <p className="flex items-center gap-2">
-                <Heart className="size-3 text-green-500" />
+                <Heart className="size-3 text-emerald-500" />
                 Non-judgmental responses
               </p>
             </div>
@@ -539,7 +691,7 @@ export default function TherapyAssistantPage() {
         </div>
 
         {/* Main Chat Area */}
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-4">
           <div className="bg-card rounded-xl border border-border flex flex-col h-[600px]">
             {/* Chat Header */}
             <div className="p-4 border-b border-border flex items-center justify-between">
@@ -553,7 +705,7 @@ export default function TherapyAssistantPage() {
                   </h3>
                   <span className="flex items-center gap-1 text-xs text-emerald-600">
                     <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    Online - Ready to help
+                    Online - Ready to help with health, feelings & emotions
                   </span>
                 </div>
               </div>
@@ -582,8 +734,14 @@ export default function TherapyAssistantPage() {
                   )}
                 >
                   {message.role === "assistant" && (
-                    <div className="size-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <Sparkles className="size-4 text-primary" />
+                    <div className={cn(
+                      "size-8 rounded-full flex items-center justify-center flex-shrink-0",
+                      message.type === "off-topic" ? "bg-amber-100" : "bg-primary/10"
+                    )}>
+                      <Sparkles className={cn(
+                        "size-4",
+                        message.type === "off-topic" ? "text-amber-600" : "text-primary"
+                      )} />
                     </div>
                   )}
                   <div
@@ -591,13 +749,16 @@ export default function TherapyAssistantPage() {
                       "max-w-[80%] rounded-2xl p-4",
                       message.role === "user"
                         ? "bg-primary text-primary-foreground rounded-br-md"
+                        : message.type === "off-topic"
+                        ? "bg-amber-50 border border-amber-200 rounded-bl-md"
                         : "bg-secondary/50 rounded-bl-md"
                     )}
                   >
                     <div
                       className={cn(
                         "text-sm whitespace-pre-wrap",
-                        message.role === "assistant" && "text-foreground"
+                        message.role === "assistant" && message.type !== "off-topic" && "text-foreground",
+                        message.type === "off-topic" && "text-amber-900"
                       )}
                     >
                       {message.content.split("\n").map((line, i) => (
@@ -611,6 +772,8 @@ export default function TherapyAssistantPage() {
                         "text-xs mt-2 flex items-center gap-1",
                         message.role === "user"
                           ? "text-primary-foreground/70"
+                          : message.type === "off-topic"
+                          ? "text-amber-700"
                           : "text-muted-foreground"
                       )}
                     >
@@ -670,7 +833,7 @@ export default function TherapyAssistantPage() {
                 </button>
                 <button
                   onClick={() => handleQuickPrompt("Help me with pelvic relaxation")}
-                  className="text-xs px-3 py-1.5 rounded-full bg-green-50 text-green-700 hover:bg-green-100 transition-colors flex items-center gap-1"
+                  className="text-xs px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition-colors flex items-center gap-1"
                 >
                   <Target className="size-3" />
                   Pelvic Relaxation
@@ -694,9 +857,10 @@ export default function TherapyAssistantPage() {
                 <Input
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
-                  placeholder="Type your message... I'm here to help"
+                  placeholder="Ask about health, feelings, emotions, or wellness..."
                   className="flex-1"
                   disabled={isTyping}
+                  suppressHydrationWarning
                 />
                 <Button type="submit" disabled={!inputValue.trim() || isTyping}>
                   <Send className="size-4" />
@@ -726,7 +890,7 @@ export default function TherapyAssistantPage() {
                 <ChevronRight className="size-4 text-muted-foreground mt-2 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
-                href="/dashboard"
+                href="/dashboard/progress"
                 className="p-3 rounded-lg bg-secondary/50 hover:bg-secondary transition-colors group"
               >
                 <Activity className="size-5 text-primary mb-2" />
@@ -739,7 +903,7 @@ export default function TherapyAssistantPage() {
                 <ChevronRight className="size-4 text-muted-foreground mt-2 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
-                href="/dashboard"
+                href="/dashboard/progress"
                 className="p-3 rounded-lg bg-secondary/50 hover:bg-secondary transition-colors group"
               >
                 <Target className="size-5 text-primary mb-2" />
@@ -752,7 +916,7 @@ export default function TherapyAssistantPage() {
                 <ChevronRight className="size-4 text-muted-foreground mt-2 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
-                href="/dashboard"
+                href="/dashboard/progress"
                 className="p-3 rounded-lg bg-secondary/50 hover:bg-secondary transition-colors group"
               >
                 <Heart className="size-5 text-primary mb-2" />
