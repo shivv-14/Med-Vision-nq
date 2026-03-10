@@ -41,18 +41,44 @@ export default function MedicationsPage() {
     setHasSearched(true)
 
     try {
+      // Use internal API proxy instead of external API directly
       const response = await fetch(
-        `https://curo-156q.onrender.com/api/medicine-search?query=${encodeURIComponent(query.trim())}`
+        `/api/medicine-search?query=${encodeURIComponent(query.trim())}`
       )
       const data = await response.json()
 
       if (!data.success) {
-        throw new Error(data.error || 'Failed to fetch results')
+        // Show user-friendly error messages based on error code
+        const errorMessages: Record<string, string> = {
+          'AUTH_ERROR': 'Medicine service temporarily unavailable. Please try again later.',
+          'TIMEOUT': 'Unable to connect to pharmacy providers. Please try again.',
+          'NETWORK_ERROR': 'Unable to connect to pharmacy providers. Please check your connection.',
+          'UNKNOWN_ERROR': 'Medicine service temporarily unavailable. Please try again later.'
+        }
+        throw new Error(errorMessages[data.code] || data.error || 'Failed to fetch results')
       }
 
-      setResults(data.data)
+      // Check if we have any results
+      const hasResults = data.data && (
+        (data.data.pharmEasy?.products?.length > 0) ||
+        (data.data.oneMg?.products?.length > 0) ||
+        (data.data.apollo?.products?.length > 0)
+      )
+
+      if (!hasResults) {
+        setError(null)
+        setResults(null)
+      } else {
+        setResults(data.data)
+      }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred while fetching results')
+      const errorMessage = err instanceof Error ? err.message : 'An error occurred while fetching results'
+      // Show user-friendly message instead of technical error
+      if (errorMessage.toLowerCase().includes('failed to fetch') || errorMessage.toLowerCase().includes('network')) {
+        setError('Unable to connect to pharmacy providers. Please check your connection and try again.')
+      } else {
+        setError(errorMessage)
+      }
       setResults(null)
     } finally {
       setIsLoading(false)
