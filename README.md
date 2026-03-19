@@ -135,7 +135,7 @@ EHR integration (FHIR/HL7)
 
 📩 Support
 
-For queries or help:
-📧 hello@medvision.app
+For queries or help:  
+📧 shivaganesh1430@outlook.com 
 git clone https://github.com/shivv-14/Med-Vision-nq.git
 cd Med-Vision-nq
