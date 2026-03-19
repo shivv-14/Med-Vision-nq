@@ -1,35 +1,141 @@
-# Med-Vision-nq
+# 🧠 MedVision – AI-Powered Personal Wellness Assistant
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [v0](https://v0.app).
+## ❤️ Overview
+**MedVision** is an AI-powered personal wellness assistant designed to support users in managing their health, therapy, and daily well-being.  
 
-## Built with v0
+It combines **AI therapy guidance, health tracking, and medical insights** into one smart platform — helping users stay consistent, informed, and mentally strong.
 
-This repository is linked to a [v0](https://v0.app) project. You can continue developing by visiting the link below -- start new chats to make changes, and v0 will push commits directly to this repo. Every merge to `main` will automatically deploy.
+> “This is not just an app, MedVision is a clinical intelligence ecosystem.”
 
-[Continue working on v0 →](https://v0.app/chat/projects/prj_fdTTbUTNsgrpGvIYhddkCkElsbkl)
+---
 
-## Getting Started
+## 🚀 Key Features
 
-First, run the development server:
+### 🧑‍⚕️ 1. AI Therapy Assistant
+- Chat with an AI therapist anytime  
+- Supports guided therapy (CBT-based conversations)  
+- Helps manage stress, anxiety, and emotions  
 
-```bash
+### 📊 2. Progress Tracking Dashboard
+- Track therapy streaks  
+- Monitor improvement over time  
+- View personalized health insights  
+
+### 🩺 3. Pain Diary & Analytics
+- Log daily pain levels  
+- Visualize trends using charts  
+- Helps in better diagnosis and treatment  
+
+### 💊 4. Medicine Helper
+- Search medicines  
+- View usage and alternatives  
+- Supports better awareness and adherence  
+
+### 📅 5. Screening & Sessions
+- Perform quick symptom checks  
+- Manage upcoming therapy sessions  
+- Stay consistent with appointments  
+
+---
+
+## 🎯 Problem Statement
+Many individuals, especially those undergoing therapy or dealing with chronic conditions, struggle with:
+- Lack of continuous support  
+- Poor tracking of health data  
+- Limited access to instant guidance  
+
+---
+
+## 💡 Solution
+MedVision provides a **centralized AI-powered platform** that:
+- Assists users with therapy anytime  
+- Tracks health metrics efficiently  
+- Improves adherence and engagement  
+
+---
+
+## 🌍 Impact
+- Enhances mental health accessibility  
+- Encourages consistent therapy habits  
+- Improves patient awareness and outcomes  
+- Bridges gap between patients and healthcare support  
+
+---
+
+## 🛠 Tech Stack
+- **Frontend:** Next.js, React, HTML, CSS  
+- **Backend:** (Add your backend – Node.js / Flask if used)  
+- **AI Integration:** Conversational AI + Smart Health Logic  
+- **Tools Used:** GitHub, Postman  
+
+---
+
+## ⚙️ How to Run the Project
+
+### 1. Clone Repository
+bash
+git clone https://github.com/shivv-14/Med-Vision-nq.git
+cd Med-Vision-nq
+
+
+
+2. Install Dependencies
+npm install
+3. Start Development Server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+4. Open in Browser
+http://localhost:3000
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+📸 Application Screenshots
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Dashboard
 
-## Learn More
+AI Chat
 
-To learn more, take a look at the following resources:
+Pain Tracker
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [v0 Documentation](https://v0.app/docs) - learn about v0 and how to use it.
+Medicine Search
 
-<a href="https://v0.app/chat/api/kiro/clone/shivv-14/Med-Vision-nq" alt="Open in Kiro"><img src="https://pdgvvgmkdvyeydso.public.blob.vercel-storage.com/open%20in%20kiro.svg?sanitize=true" /></a>
+🎥 Demo Video
+
+(Add your video walkthrough link here)
+
+🏗 Architecture (From PPT)
+
+Modular system design
+
+Scalable microservices architecture
+
+AI + Data + UI integration
+
+Lightweight cloud deployment
+
+🔥 Unique Advantages
+
+AI Therapy + Health Tracking in ONE system
+
+Multi-feature integrated platform
+
+Future-ready scalable design
+
+Focus on real-world healthcare impact
+
+🔮 Future Enhancements
+
+Voice-based AI assistant
+
+Smart appointment scheduling
+
+Advanced drug comparison system
+
+Multi-user (doctor + patient) system
+
+EHR integration (FHIR/HL7)
+
+
+📩 Support
+
+For queries or help:
+📧 hello@medvision.app
+git clone https://github.com/shivv-14/Med-Vision-nq.git
+cd Med-Vision-nq
