@@ -88,6 +88,12 @@ http://localhost:3000
 
 📸 Application Screenshots
 ![image alt](https://github.com/shivv-14/Med-Vision-nq/blob/3b9148cf5a4a5956147a0252523c247bcb2c4d97/Screenshot%202026-03-19%20155923.png)
+![image alt](https://github.com/shivv-14/Med-Vision-nq/blob/e3e55b4b0b5836812918e147196a11aa7c8e4279/screenshots/Screenshot%202026-03-19%20160104.png)
+![image alt](https://github.com/shivv-14/Med-Vision-nq/blob/e3e55b4b0b5836812918e147196a11aa7c8e4279/screenshots/Screenshot%202026-03-19%20160159.png)
+![image alt](https://github.com/shivv-14/Med-Vision-nq/blob/e3e55b4b0b5836812918e147196a11aa7c8e4279/screenshots/Screenshot%202026-03-19%20160224.png)
+![image alt](https://github.com/shivv-14/Med-Vision-nq/blob/e3e55b4b0b5836812918e147196a11aa7c8e4279/screenshots/Screenshot%202026-03-19%20160236.png)
+![image alt](https://github.com/shivv-14/Med-Vision-nq/blob/e3e55b4b0b5836812918e147196a11aa7c8e4279/screenshots/Screenshot%202026-03-19%20160259.png)
+![image alt](https://github.com/shivv-14/Med-Vision-nq/blob/e3e55b4b0b5836812918e147196a11aa7c8e4279/screenshots/Screenshot%202026-03-19%20160310.png)
 Dashboard
 
 AI Chat
