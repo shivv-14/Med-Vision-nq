@@ -87,7 +87,7 @@ npm run dev
 http://localhost:3000
 
 📸 Application Screenshots
-
+![image alt](https://github.com/shivv-14/Med-Vision-nq/blob/3b9148cf5a4a5956147a0252523c247bcb2c4d97/Screenshot%202026-03-19%20155923.png)
 Dashboard
 
 AI Chat
